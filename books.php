@@ -1,5 +1,7 @@
 <?php
-session_start(); 
+session_start();
+//print_r($_SESSION['roll_no']);
+//exit;
 
 $servername = "localhost";
 $username = "root";
@@ -67,7 +69,7 @@ if(isset($_POST['addbooks'])){
         $uploadOk = 0;
     }
     // Check file size
-    if ($_FILES["fileToUpload"]["size"] > 500000) {
+    if ($_FILES["fileToUpload"]["size"] > 50000000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
@@ -100,7 +102,7 @@ foreach($daterange as $date){
     $i++;
 }
 
-    $insert_query = "INSERT INTO books (user_id,book_name,description,author,category,sale_type,price,availability,quantity,post_date,period,start_date,end_date,image) VALUES('$user_id','$bookname','$aboutbook','$authorname','$category','$type','$price','1','$quantity',date('Y-m-d H:m:i'),'$i','$startdate','$enddate','$image')";
+    $insert_query = "INSERT INTO books (user_id,book_name,description,author,category,sale_type,price,availability,quantity,post_date,period,start_date,end_date,image) VALUES('$user_id','$bookname','$aboutbook','$authorname','$category','$type','$price','1','$quantity',now(),'$i','$startdate','$enddate','$image')";
     $result = mysqli_query($conn, $insert_query);
 
     if($result){
@@ -117,10 +119,10 @@ foreach($daterange as $date){
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Paper Dashboard 2 by Creative Tim
+     Dashboard
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -146,7 +148,26 @@ foreach($daterange as $date){
     <?php include('header.php'); ?>
       <div class="content">
         <div class="row">
-          <div class="col-md-12">
+        <div class="col-md-3">
+          <div class="card card-user">
+              <div class="card-header">
+                <h5 class="card-title" style="text-align: center;">Menu</h5>
+              </div>
+              <hr>
+              <div class="card-header" style="background-color: #fe4c50;">
+                <a href="books.php"><h5 class="card-title">Add Book</h5></a>
+              </div>
+              <div class="card-header">
+              <a href="incoming.php"><h5 class="card-title">My Sales</h5></a>
+              </div>
+              <div class="card-header">
+              <a href="outgoing.php"><h5 class="card-title">My Orders</h5></a>
+              </div>
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
             <div class="card card-user">
               <div class="card-header">
                 <h5 class="card-title">Add Book</h5>

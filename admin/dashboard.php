@@ -17,6 +17,25 @@ if(!isset($_SESSION['admin_username'])){
 header("location:login.php");
 }
 
+$books = "SELECT count(*) AS data FROM books";
+$book_count = mysqli_query($conn, $books);
+$bcount = mysqli_fetch_object($book_count);
+
+$bookings = "SELECT count(*) AS data FROM bookings";
+$bookings_count = mysqli_query($conn, $bookings);
+$bocount = mysqli_fetch_object($bookings_count);
+
+$users = "SELECT count(*) AS data FROM user";
+$users_count = mysqli_query($conn, $users);
+$ucount = mysqli_fetch_object($users_count);
+
+
+
+$feedback = "SELECT count(*) AS data FROM contact";
+$feedback_count = mysqli_query($conn, $feedback);
+$fcount = mysqli_fetch_object($feedback_count);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,10 +43,10 @@ header("location:login.php");
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon2.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Paper Dashboard 2 by Creative Tim
+     Dashboard
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -65,7 +84,7 @@ header("location:login.php");
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a>
+            <a class="navbar-brand" href="#pablo">Dashboard</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -73,25 +92,7 @@ header("location:login.php");
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="nc-icon nc-zoom-split"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link btn-magnify" href="#pablo">
-                  <i class="nc-icon nc-layout-11"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
               <li class="nav-item btn-rotate dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-bell-55"></i>
@@ -102,14 +103,6 @@ header("location:login.php");
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" onclick="logout()">Logout</a>
                 </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-rotate" href="#pablo">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
               </li>
             </ul>
           </div>
@@ -135,8 +128,8 @@ header("location:login.php");
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Capacity</p>
-                      <p class="card-title">150GB
+                      <p class="card-category">Users</p>
+                      <p class="card-title"><?php echo $ucount->data; ?>
                         <p>
                     </div>
                   </div>
@@ -145,7 +138,7 @@ header("location:login.php");
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-refresh"></i> Update Now
+                  <i class="fa fa-refresh"></i> 
                 </div>
               </div>
             </div>
@@ -161,8 +154,8 @@ header("location:login.php");
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Revenue</p>
-                      <p class="card-title">$ 1,345
+                      <p class="card-category">Books</p>
+                      <p class="card-title"><?php echo $bcount->data; ?>
                         <p>
                     </div>
                   </div>
@@ -187,8 +180,8 @@ header("location:login.php");
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Errors</p>
-                      <p class="card-title">23
+                      <p class="card-category">Bookings</p>
+                      <p class="card-title"><?php echo $bocount->data; ?>
                         <p>
                     </div>
                   </div>
@@ -213,8 +206,8 @@ header("location:login.php");
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Followers</p>
-                      <p class="card-title">+45K
+                      <p class="card-category">Feedback</p>
+                      <p class="card-title"><?php echo $fcount->data; ?>
                         <p>
                     </div>
                   </div>
@@ -248,7 +241,7 @@ header("location:login.php");
             </div>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-4">
             <div class="card ">
               <div class="card-header ">
@@ -293,35 +286,9 @@ header("location:login.php");
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li>
-                  <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
-                </li>
-                <li>
-                  <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
-                </li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                ©
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <?php include("footer.php");?>
     </div>
   </div>
   <!--   Core JS Files   -->

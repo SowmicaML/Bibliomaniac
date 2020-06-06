@@ -21,6 +21,12 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 
 Copyright (c) 2015 Daniel Eden
 */
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-image: url(//images/bg3.jpeg);
+  color: white;
+}
 
 .animated {
   -webkit-animation-duration: 1s;
@@ -5497,7 +5503,7 @@ License - nucleoapp.com/license/
 }
 
 .card .card-header {
-  padding: 15px 15px 0;
+  padding: 15px;
   border: 0;
 }
 
@@ -5697,7 +5703,7 @@ License - nucleoapp.com/license/
 }
 
 .card-user .card-body {
-  min-height: 240px;
+  min-height: 170px;
 }
 
 .card-user hr {

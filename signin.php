@@ -25,18 +25,17 @@ if(isset($_POST['login'])){
     if (count($user) != 0) {
         $_SESSION['roll_no'] = $rollno;
         $_SESSION['username'] = $user['username'];
-        echo "Logged in";
         header('location: index.php');
   	}else {
   		echo "Wrong username/password combination";
   	}
-
+   
 }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Foodie login</title>
+        <title>BiblioManiac login</title>
         <link rel="stylesheet" href="styles/style.css">
         </head>
         <body>
@@ -45,12 +44,12 @@ if(isset($_POST['login'])){
                 </div>
                         <div class="login-form">
                             <div class="app-logo">
-                                  <img class="img" src="images/foodielogo.png">
+                                  <img class="img" src="images/bibliologo.png">
                             </div>
                                  <h2>SIGN IN</h2>
                                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" >
                                         <div class="form-field">
-                                            <input type="text" name="roll_no" placeholder=" Enter username" required/>
+                                            <input type="text" name="roll_no" placeholder=" Enter rollno" required/>
                                         </div>
                                         <div class="form-field">
                                             <input type="password" name="password" placeholder="Enter password" required/> 

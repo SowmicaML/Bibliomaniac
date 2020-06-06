@@ -1,0 +1,27 @@
+.highlight { 
+    color: rgb(255, 255, 255);  
+    background: rgb(0, 0, 0); /* fallback color */
+    padding: 10px; 
+    background: rgba(31, 30, 30, 0.7);
+ }
+ .text
+ {
+     padding-top:20px;
+     color: black;
+     font-size:medium;
+     text-align: justify;
+ }
+  
+ .space
+ {
+     line-height:1.8;
+ }
+
+ .ul_style
+ {
+     list-style-type:disc;
+     font-size:medium;
+     padding-left:10%;
+     color:black;
+ }
+ 

@@ -1,4 +1,5 @@
 <?php 
+session_start();
 
 $servername = "localhost";
 $username = "root";
@@ -12,14 +13,31 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-//Fetching datas from book table
+$uid=$_SESSION['roll_no'];
 
-if(isset($_GET['id']) && $_GET['id'] != ''){
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM books WHERE id=".$id." LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    $book = $result->fetch_row();
+//Fetching datas from book table
+if(!isset($_GET['check'])){
+	if(isset($_GET['id']) && $_GET['id'] != ''){
+		$id = $_GET['id'];
+		$sql = "SELECT * FROM books WHERE id=".$id." LIMIT 1";
+		$result = mysqli_query($conn, $sql);
+		$book = $result->fetch_row();
+	}
+}else if(isset($_GET['check']) && $_GET['check']==1){
+	if(isset($_GET['qua']) && $_GET['qua'] != ''){
+		$id = $_GET['id'];
+		$qua = $_GET['qua'];
+		$sql = "SELECT * FROM books WHERE id=".$id." LIMIT 1";
+		$result = mysqli_query($conn, $sql);
+		$book = $result->fetch_row();
+		if($qua > $book[9]){
+			echo "Only ".$book[9]." book(s) available";exit;
+		}else{
+			echo "true";exit;
+		}
+	}
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -90,10 +108,12 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
 						<p><?php echo $book[3]; ?></p>
 					</div>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
-						<span class="ti-truck"></span><span>free delivery</span>
+						<span>free delivery</span>
 					</div><br>
 					<?php if($book[6] == 1){ ?>
-						<div class="product_price">$ <?php echo $book[7]; ?></div>
+						<div class="product_price">INR
+							<?php echo $book[7]; ?></div><br>
+						
 					<?php }else if($book[6] == 2){ ?>
 						<div class="product_price"> Rent from <?php echo date('d/m/Y',strtotime($book[12])); ?> to <?php echo date('d/m/Y',strtotime($book[13])); ?></div>
 					<?php }else{ ?>
@@ -108,185 +128,36 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
 					</ul> -->
 
 					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+						<?php if($book[6] == 1){ ?>
 						<span>Quantity:</span>
 						<div class="quantity_selector">
 							<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
 							<span id="quantity_value">1</span>
 							<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
 						</div>
-						<div class="red_button add_to_cart_button"><a href="#">Buy Now</a></div>
-						<div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
-					</div>
+					<?php } ?>
+						<?php if($uid != $book[1]){ ?>
+							<div class="red_button add_to_cart_button">
+								<a onclick="checkquantity(<?php echo $id; ?>)">Get Now</a></div>
+						<?php } ?>
+						<!-- <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div> -->
+					</div><br>
+					<?php if($book[6] == 1){ ?>
+						<div class="d-flex flex-row">
+						<?php if($book[9] != 0){ ?>
+							<span>Only <?php echo $book[9]; ?> book's left</span>
+						<?php }else{ ?>
+							<span>Out of stock</span>
+						<?php } ?>
+					</div><br>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
 
 	</div>
 
-	<!-- Tabs -->
-
-	<div class="tabs_section_container">
-
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="tabs_container">
-						<ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
-							<li class="tab active" data-active-tab="tab_1"><span>Description</span></li>
-							<li class="tab" data-active-tab="tab_2"><span>Additional Information</span></li>
-							<li class="tab" data-active-tab="tab_3"><span>Reviews (2)</span></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-
-					<!-- Tab Description -->
-
-					<div id="tab_1" class="tab_container active">
-						<div class="row">
-							<div class="col-lg-5 desc_col">
-								<div class="tab_title">
-									<h4>Description</h4>
-								</div>
-								<div class="tab_text_block">
-									<h2>Pocket cotton sweatshirt</h2>
-									<p>Nam tempus turpis at metus scelerisque placerat nulla deumantos solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis ut...</p>
-								</div>
-								<div class="tab_image">
-									<img src="images/desc_1.jpg" alt="">
-								</div>
-								<div class="tab_text_block">
-									<h2>Pocket cotton sweatshirt</h2>
-									<p>Nam tempus turpis at metus scelerisque placerat nulla deumantos solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis ut...</p>
-								</div>
-							</div>
-							<div class="col-lg-5 offset-lg-2 desc_col">
-								<div class="tab_image">
-									<img src="images/desc_2.jpg" alt="">
-								</div>
-								<div class="tab_text_block">
-									<h2>Pocket cotton sweatshirt</h2>
-									<p>Nam tempus turpis at metus scelerisque placerat nulla deumantos solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis ut...</p>
-								</div>
-								<div class="tab_image desc_last">
-									<img src="images/desc_3.jpg" alt="">
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Tab Additional Info -->
-
-					<div id="tab_2" class="tab_container">
-						<div class="row">
-							<div class="col additional_info_col">
-								<div class="tab_title additional_info_title">
-									<h4>Additional Information</h4>
-								</div>
-								<p>COLOR:<span>Gold, Red</span></p>
-								<p>SIZE:<span>L,M,XL</span></p>
-							</div>
-						</div>
-					</div>
-
-					<!-- Tab Reviews -->
-
-					<div id="tab_3" class="tab_container">
-						<div class="row">
-
-							<!-- User Reviews -->
-
-							<div class="col-lg-6 reviews_col">
-								<div class="tab_title reviews_title">
-									<h4>Reviews (2)</h4>
-								</div>
-
-								<!-- User Review -->
-
-								<div class="user_review_container d-flex flex-column flex-sm-row">
-									<div class="user">
-										<div class="user_pic"></div>
-										<div class="user_rating">
-											<ul class="star_rating">
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-											</ul>
-										</div>
-									</div>
-									<div class="review">
-										<div class="review_date">27 Aug 2016</div>
-										<div class="user_name">Brandon William</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									</div>
-								</div>
-
-								<!-- User Review -->
-
-								<div class="user_review_container d-flex flex-column flex-sm-row">
-									<div class="user">
-										<div class="user_pic"></div>
-										<div class="user_rating">
-											<ul class="star_rating">
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-											</ul>
-										</div>
-									</div>
-									<div class="review">
-										<div class="review_date">27 Aug 2016</div>
-										<div class="user_name">Brandon William</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									</div>
-								</div>
-							</div>
-
-							<!-- Add Review -->
-
-							<div class="col-lg-6 add_review_col">
-
-								<div class="add_review">
-									<form id="review_form" action="post">
-										<div>
-											<h1>Add Review</h1>
-											<input id="review_name" class="form_input input_name" type="text" name="name" placeholder="Name*" required="required" data-error="Name is required.">
-											<input id="review_email" class="form_input input_email" type="email" name="email" placeholder="Email*" required="required" data-error="Valid email is required.">
-										</div>
-										<div>
-											<h1>Your Rating:</h1>
-											<ul class="user_star_rating">
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star" aria-hidden="true"></i></li>
-												<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-											</ul>
-											<textarea id="review_message" class="input_review" name="message"  placeholder="Your Review" rows="4" required data-error="Please, leave us a review."></textarea>
-										</div>
-										<div class="text-left text-sm-right">
-											<button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
-										</div>
-									</form>
-								</div>
-
-							</div>
-
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-	</div>
-
+	 
 	<!-- Benefit -->
 
 	<div class="benefit">
@@ -332,65 +203,10 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
 		</div>
 	</div>
 
-	<!-- Newsletter -->
+	<?php include("news.php"); ?>
+	<?php include("Footer.php"); ?>
 
-	<div class="newsletter">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-						<h4>Newsletter</h4>
-						<p>Subscribe to our newsletter and get 20% off your first purchase</p>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<form action="post">
-						<div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-							<input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
-							<button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-						<ul class="footer_nav">
-							<li><a href="#">Blog</a></li>
-							<li><a href="#">FAQs</a></li>
-							<li><a href="contact.html">Contact us</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-						<ul>
-							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer_nav_container">
-						<div class="cr">©2018 All Rights Reserverd. This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-
+	
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
@@ -402,5 +218,28 @@ if(isset($_GET['id']) && $_GET['id'] != ''){
 <script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="js/single_custom.js"></script>
 </body>
-
+<script>
+function checkquantity(id){
+	var type = <?php echo $book[6]; ?>;
+	if(type == 1){
+		var qua=document.getElementById("quantity_value").innerHTML;
+		$.ajax({
+			type: "GET",
+			url: 'http://localhost/biblio/bookview.php?check=1&id='+id+'&qua='+qua,
+			success: function(data){
+				if(data != "true"){
+					alert(data);
+				}else{
+					location.href="http://localhost/biblio/buynow.php?id="+id+'&qua='+qua;
+				}
+			}
+		})
+	}else if(type == 3){
+		location.href="http://localhost/biblio/buynow.php?id="+id;
+	}
+	else if(type == 2){
+		location.href="http://localhost/biblio/buynow.php?id="+id;
+	}
+}
+</script>
 </html>

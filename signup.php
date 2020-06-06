@@ -45,7 +45,7 @@ if (isset($_POST['reg_user'])) {
                 </div>
                         <div class="login-form">
                             <div class="app-logo">
-                                  <img class="img" src="images/foodielogo.png">
+                                  <img class="img" src="images/bibliologo.png">
                             </div>
                                  <h2>SIGN UP</h2>
                                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return validate()">

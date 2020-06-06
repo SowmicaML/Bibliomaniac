@@ -3,17 +3,15 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="../assets/img/logo-small.png">
+            <img src="../images/bibliologo.png">
           </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
-        </a>
+    
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -36,27 +34,21 @@
             </a>
           </li>
           <li>
-            <a href="./blogs.php">
+            <a href="./bookings.php">
               <i class="nc-icon nc-bell-55"></i>
               <p>Bookings</p>
             </a>
           </li>
-          <li class="active ">
-            <a href="./blogs.php">
+          <!-- <li class="active ">
+            <a href="./contact.php">
               <i class="nc-icon nc-single-02"></i>
-              <p>Blogs</p>
+              <p>Contacts</p>
             </a>
-          </li>
+          </li> -->
           <li>
-            <a href="./feedback.php">
+            <a href="./contact.php">
               <i class="nc-icon nc-tile-56"></i>
               <p>Feedback</p>
-            </a>
-          </li>
-          <li>
-            <a href="./user.php">
-              <i class="nc-icon nc-caps-small"></i>
-              <p>User</p>
             </a>
           </li>
         </ul>

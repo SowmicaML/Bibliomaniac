@@ -6,7 +6,7 @@ $username = "root";
 $password = "";
 $dbname = "biblio";
 
-// Create connection
+// 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$conn) {
@@ -38,7 +38,7 @@ if(isset($_POST['login'])){
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Foodie login</title>
+        <title>BiblioManiac login</title>
         <link rel="stylesheet" href="../styles/style.css">
         </head>
         <body>
@@ -47,7 +47,7 @@ if(isset($_POST['login'])){
                 </div>
                         <div class="login-form">
                             <div class="app-logo">
-                                  <img class="img" src="../images/foodielogo.png">
+                                  <img class="img" src="../images/bibliologo.png">
                             </div>
                                  <h2>SIGN IN</h2>
                                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" >
